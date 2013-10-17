@@ -1,2 +1,2 @@
 require "github" "holman/spark"
-require "path"   "/home/ABC-OBJECTIF/julien.bianchi/Bureau/bandleader/test/colors"  "colors"
+require "path"   "/home/ABC-OBJECTIF/julien.bianchi/Bureau/bandleader/test/colorizer"  "colorizer/colorizer"

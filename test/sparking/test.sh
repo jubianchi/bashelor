@@ -1,8 +1,8 @@
 #!/bin/bash
 
-. bandleader -q
- 
+. bandleader
+
 use "holman/spark/spark"
-use "colors/colors/colors"
+use "colorizer/colorizer/colorizer"
 
 color $COLOR_RED $(spark 0 30 55 80 33 150 20 35 41 25)

@@ -15,5 +15,5 @@ function path() {
 
 	mkdir -p "$DIRECTORY"
 
-	cp -r "$URL" "$DIRECTORY"
+	cp -r "$URL"/* "$DIRECTORY"
 }

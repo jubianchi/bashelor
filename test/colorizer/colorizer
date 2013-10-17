@@ -1,0 +1,14 @@
+#!/bin/bash
+
+. bandleader
+
+use "colors/colors/colors"
+
+function color() {
+	local COLOR
+
+	COLOR=$1
+	shift
+
+	echo -e "\033[${COLOR}m$*\033[0m"
+}
