@@ -1,6 +1,6 @@
 test: clean bin/bashelor
 	@bin/bashelor install
-	@vendor/dfs-sh/roundup/roundup.sh tests/*sh
+	@cd tests && ../vendor/dfs-sh/roundup/roundup.sh test-*.sh
 
 bin/bashelor: bin build/bashelor build/driver
 	@echo "#!/bin/bash\n" > bin/bashelor

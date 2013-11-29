@@ -37,10 +37,13 @@ function require() {
 	[ ! -d "$BASHELOR_VENDOR_DIRECTORY" ] && mkdir "$BASHELOR_VENDOR_DIRECTORY"
 
 	(
-		cd $BASHELOR_VENDOR_DIRECTORY && \
-		$DRIVER "$URL" "$DEST" && echo && \
-		cd "$DEST" && \
-		( [ -f deps ] && . deps ) || true
+	    set -e
+		cd $BASHELOR_VENDOR_DIRECTORY
+		$DRIVER "$URL" "$DEST"
+		echo
+		cd "$DEST"
+		( [ -f deps ] && . deps )
+		set +e
 	)
 }
 
@@ -60,7 +63,9 @@ function mainuse() {
 				mainuse $*
 			}
 		else
-			error 2 "$LIB does not exist"
+			error "$LIB does not exist"
+
+			exit 2
 		fi
 	done
 }
@@ -80,14 +85,23 @@ function reluse() {
 		then
 			. "$BASHELOR_CURRENT_DIR/$LIB"
 		else
-			error 2 "$LIB does not exist"
+			error "$LIB does not exist"
+
+			exit 2
 		fi
 	done
 }
 
 if [ "$1" = "install" ]
 then
-	[ -f deps ] && . deps
+	if [ -f deps ]
+	then
+	    . deps
+    else
+        error "Nos deps file found in $(pwd)"
+
+        exit 2
+    fi
 
 	[ "$2" != "inline" ] && exit 0
 fi
