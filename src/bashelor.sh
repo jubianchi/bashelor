@@ -35,23 +35,24 @@ function require() {
 }
 
 function mainuse() {
-	[ -z "$BAND_PATH" ] && BAND_PATH="$(dirname $0)/$BASHELOR_VENDOR_DIRECTORY"
+	[ -z "$BASHELOR_PATH" ] && BASHELOR_PATH="$(dirname $0)"
+	BASHELOR_PATH="$BASHELOR_PATH/$BASHELOR_VENDOR_DIRECTORY"
 
 	for LIB in $*
 	do
-		if [ -f "$BAND_PATH/$LIB" ]
+		if [ -f "$BASHELOR_PATH/$LIB" ]
 		then
 			function use() {
-				BAND_PATH="$(dirname "$BASHELOR_VENDOR_DIRECTORY/$LIB")/$BASHELOR_VENDOR_DIRECTORY" mainuse $*
+				BASHELOR_PATH="$(dirname "$BASHELOR_VENDOR_DIRECTORY/$LIB")/$BASHELOR_VENDOR_DIRECTORY" mainuse $*
 			}
 
-			. "$BAND_PATH/$LIB"
+			. "$BASHELOR_PATH/$LIB"
 
 			function use() {
 				mainuse $*
 			}
 		else
-			echo "$BAND_PATH/$LIB does not exist"
+			echo "$BASHELOR_PATH/$LIB does not exist"
 		fi
 	done
 }
