@@ -1,5 +1,17 @@
+if [ -z "$BASHELOR_GIT_CMD" ]
+then
+    BASHELOR_GIT_CMD=git
+fi
+
 function gitBashelorDriver() {
-	which git > /dev/null 2>&1 || (echo 'git command is not available' && exit 1)
+    local GIT=$(which "$BASHELOR_GIT_CMD" 2>&1)
+
+	if [ -z "$GIT" ]
+	then
+	    error "git command ($BASHELOR_GIT_CMD) is not available"
+
+	    exit 45
+    fi
 
 	local URL="$1"
 	local DIRECTORY="$2"
@@ -8,26 +20,26 @@ function gitBashelorDriver() {
 
 	if [ -d "$DIRECTORY" ]
 	then
-		PREV_REV=$(git --git-dir="$DIRECTORY/.git" rev-parse --short HEAD)
+		PREV_REV=$(${GIT} --git-dir="$DIRECTORY/.git" rev-parse --short HEAD)
 
-		log "=> Updating $(success ${DIRECTORY})"
+		log "=> Updating $(success "$DIRECTORY")"
 		(
 			cd "$DIRECTORY" && \
-			/usr/bin/env git pull
+			${GIT} pull
 		) > /dev/null 2>&1
 	else
-		log "=> Installing $(success ${URL}) into $(success ${DIRECTORY})"
-		/usr/bin/env git clone "$URL" "$DIRECTORY" > /dev/null 2>&1
+		log "=> Cloning $(success "$URL") into $(success "$DIRECTORY")"
+		${GIT} clone "$URL" "$DIRECTORY" > /dev/null 2>&1
 	fi
 
-	CURRENT_REV=$(git --git-dir="$DIRECTORY/.git" rev-parse --short HEAD)
+	CURRENT_REV=$(${GIT} --git-dir="$DIRECTORY/.git" rev-parse --short HEAD)
 
 	if [ -n "$PREV_REV" ]
 	then
 		if [ "$PREV_REV" != "$CURRENT_REV" ]
 		then
 			warning "   Updated $PREV_REV..$CURRENT_REV"
-			warning "  $(git --git-dir="$DIRECTORY/.git" diff --shortstat ${PREV_REV}..${CURRENT_REV})"
+			warning "  $(${GIT} --git-dir="$DIRECTORY/.git" diff --shortstat "$PREV_REV..$CURRENT_REV")"
 		else
 			warning "   Nothing to update ($CURRENT_REV)"
 		fi

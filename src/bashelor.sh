@@ -32,15 +32,13 @@ function require() {
 
 	[ ! -d "$BASHELOR_VENDOR_DIRECTORY" ] && mkdir "$BASHELOR_VENDOR_DIRECTORY"
 
-	(
-	    set -e
-		cd ${BASHELOR_VENDOR_DIRECTORY}
-		${DRIVER} "$URL" "$DEST"
-		echo
-		cd "$DEST"
-		( [ -f deps ] && . deps )
-		set +e
-	)
+
+
+    cd ${BASHELOR_VENDOR_DIRECTORY}
+    ${DRIVER} "$URL" "$DEST"
+    echo
+    cd "$DEST"
+    ( [ -f deps ] && . deps )
 }
 
 function mainuse() {

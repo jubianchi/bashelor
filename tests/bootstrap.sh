@@ -10,6 +10,6 @@ then
     }
 fi
 
-function getstdout() { cat $(stdout); }
-function getstderr() { cat $(stderr); }
-function getstatus() { cat $(rc); }
+. ../helpers/capture.sh
+. ../helpers/project.sh
+. ../helpers/repository.sh

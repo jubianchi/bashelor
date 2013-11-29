@@ -1,7 +1,9 @@
 # Action targets
-test: clean bin/bashelor
+test: clean dist
 	@bin/bashelor install
-	@cd tests && ../vendor/dfs-sh/roundup/roundup.sh test-*.sh
+	@cd tests/specs && ../../vendor/dfs-sh/roundup/roundup.sh test-*.sh
+
+dist: bin/bashelor
 
 clean:
 	@rm -rf bin build

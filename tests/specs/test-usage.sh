@@ -2,11 +2,11 @@
 
 describe "bashelor usage"
 
-. bootstrap.sh
-. ../src/logger.sh
+. ../bootstrap.sh
+. ../../src/logger.sh
 
 it_displays_usage() {
-	capture ../bin/bashelor -h
+	capture ../../bin/bashelor -h
 
     local OUTPUT=$(getstdout)
 
@@ -16,7 +16,7 @@ it_displays_usage() {
 	local LINE6=$(echo "$OUTPUT" | head -n6 | tail -n1)
 	local LINE7=$(echo "$OUTPUT" | head -n7 | tail -n1)
 
-	[ "$LINE1" = "Usage: $(success ../bin/bashelor) $(warning [-h] [-q]) $(success [install] [inline])" ]
+	[ "$LINE1" = "Usage: $(success ../../bin/bashelor) $(warning [-h] [-q]) $(success [install] [inline])" ]
 	[ "$LINE3" = "  $(success install): Install dependencies" ]
 	[ "$LINE4" = "  $(success inline): Inline install dependencies" ]
 	[ "$LINE6" = "  $(warning -q): Quiet mode (no output)" ]
