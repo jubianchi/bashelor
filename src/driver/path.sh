@@ -7,13 +7,14 @@ function pathBashelorDriver() {
 
 	if [ -d "$DIRECTORY" ]
 	then
-		log "=> Updating $DIRECTORY"
+		log "=> Updating $(success $DIRECTORY)"
 		rm -rf "$DIRECTORY"
 	else
-		log "=> Installing $DIRECTORY"
+		log "=> Installing $(success $DIRECTORY)"
 	fi
 
 	mkdir -p "$DIRECTORY"
 
 	cp -r "$URL"/* "$DIRECTORY"
+	warning "   Installed $DIRECTORY"
 }

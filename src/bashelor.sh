@@ -25,11 +25,9 @@ function require() {
 
 	(
 		cd $BASHELOR_VENDOR_DIRECTORY && \
-		$DRIVER "$URL" "$DEST" && \
+		$DRIVER "$URL" "$DEST" && echo && \
 		cd "$DEST" && \
-		(
-			[ -f deps ] && . deps || true
-		)
+		( [ -f deps ] && . deps ) || true
 	)
 }
 
@@ -49,9 +47,7 @@ function mainuse() {
 				mainuse $*
 			}
 		else
-			error "$BASHELOR_PATH/$LIB does not exist"
-
-			exit 2
+			error 2 "$LIB does not exist"
 		fi
 	done
 }
@@ -71,9 +67,7 @@ function reluse() {
 		then
 			. "$BASHELOR_CURRENT_DIR/$LIB"
 		else
-			error "$BASHELOR_CURRENT_DIR/$LIB does not exist"
-
-			exit 2
+			error 2 "$LIB does not exist"
 		fi
 	done
 }
