@@ -45,6 +45,7 @@ function mainuse() {
 				BASHELOR_PATH="$(dirname "$BASHELOR_VENDOR_DIRECTORY/$LIB")/$BASHELOR_VENDOR_DIRECTORY" mainuse $*
 			}
 
+			BASHELOR_CURRENT_DIR=$(dirname "$BASHELOR_PATH/$LIB")
 			. "$BASHELOR_PATH/$LIB"
 
 			function use() {
@@ -63,6 +64,18 @@ then
 		mainuse $*
 	}
 fi
+
+function reluse() {
+	for LIB in $*
+	do
+		if [ -f "$BASHELOR_PATH/$LIB" ]
+		then
+			. "$BASHELOR_CURRENT_DIR/$LIB"
+		else
+			echo "$BASHELOR_CURRENT_DIR/$LIB does not exist"
+		fi
+	done
+}
 
 if [ "$1" = "install" ]
 then
