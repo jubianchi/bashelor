@@ -1,4 +1,4 @@
-function path() {
+function pathBashelorDriver() {
 	local URL
 	local DIRECTORY
 

@@ -1,4 +1,4 @@
-function git() {
+function gitBashelorDriver() {
 	local URL
 	local DIRECTORY
 

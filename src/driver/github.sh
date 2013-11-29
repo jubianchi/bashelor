@@ -1,8 +1,8 @@
-function github() {
+function githubBashelorDriver() {
 	local URL
 
 	URL="http://github.com/$1"
 	DEST="$1"
 
-	git "$URL" "$DEST"
+	gitBashelorDriver "$URL" "$DEST"
 }

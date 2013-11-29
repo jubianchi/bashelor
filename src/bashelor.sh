@@ -12,16 +12,12 @@ then
 	shift
 fi
 
-[ -z "$BASHELOR_VENDOR_DIRECTORY" ] && BASHELOR_VENDOR_DIRECTORY='vendor'
-[ -z "$BASHELOR_PATH" ] && BASHELOR_PATH="$(dirname $0)"
-BASHELOR_PATH="$BASHELOR_PATH/$BASHELOR_VENDOR_DIRECTORY"
-
 function require() {
 	local DRIVER
 	local URL
 	local DEST
 
-	DRIVER="$1"
+	DRIVER="$1BashelorDriver"
 	URL="$2"
 	DEST="$3"
 
