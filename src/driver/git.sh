@@ -30,10 +30,11 @@ function gitBashelorDriver() {
 		if [ "$PREV_REV" != "$CURRENT_REV" ]
 		then
 			warning "   Updated $PREV_REV..$CURRENT_REV"
+			warning "  $(git --git-dir="$DIRECTORY/.git" diff --shortstat $PREV_REV..$CURRENT_REV)"
 		else
 			warning "   Nothing to update ($CURRENT_REV)"
 		fi
 	else
-		warning "   Installed $CURRENT_REV"
+		warning "   Installed $DIRECTORY@$CURRENT_REV"
 	fi
 }
