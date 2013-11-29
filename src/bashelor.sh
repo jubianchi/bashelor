@@ -28,7 +28,9 @@ function require() {
 		cd $BASHELOR_VENDOR_DIRECTORY && \
 		$DRIVER "$URL" "$DEST" && \
 		cd "$DEST" && \
-		$0 install
+		(
+			[ -f deps ] && . deps || true
+		)
 	)
 }
 
@@ -66,5 +68,5 @@ if [ "$1" = "install" ]
 then
 	[ -f deps ] && . deps
 
-	exit
+	[ "$2" != "inline" ] && exit
 fi
