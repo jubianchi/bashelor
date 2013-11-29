@@ -12,6 +12,8 @@ then
 fi
 
 [ -z "$BASHELOR_VENDOR_DIRECTORY" ] && BASHELOR_VENDOR_DIRECTORY='vendor'
+[ -z "$BASHELOR_PATH" ] && BASHELOR_PATH="$(dirname $0)"
+BASHELOR_PATH="$BASHELOR_PATH/$BASHELOR_VENDOR_DIRECTORY"
 
 function require() {
 	local DRIVER
@@ -35,9 +37,6 @@ function require() {
 }
 
 function mainuse() {
-	[ -z "$BASHELOR_PATH" ] && BASHELOR_PATH="$(dirname $0)"
-	BASHELOR_PATH="$BASHELOR_PATH/$BASHELOR_VENDOR_DIRECTORY"
-
 	for LIB in $*
 	do
 		if [ -f "$BASHELOR_PATH/$LIB" ]
