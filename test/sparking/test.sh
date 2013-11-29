@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. bandleader
+. bashelor
 
 use "holman/spark/spark"
 use "colorizer/colorizer/colorizer"

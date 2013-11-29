@@ -1,10 +1,10 @@
-all: bandleader driver bin
-	echo "#!/bin/bash\n" > bin/bandleader
-	cat build/driver.sh build/bandleader.sh >> bin/bandleader
-	chmod +x bin/bandleader
+all: bashelor driver bin
+	echo "#!/bin/bash\n" > bin/bashelor
+	cat build/driver.sh build/bashelor.sh >> bin/bashelor
+	chmod +x bin/bashelor
 
-bandleader: build
-	cp src/bandleader.sh build/
+bashelor: build
+	cp src/bashelor.sh build/
 
 driver: build
 	cat src/driver/*.sh > build/driver.sh

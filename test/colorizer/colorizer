@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. bandleader
+. bashelor
 
 use "colors/colors/colors"
 

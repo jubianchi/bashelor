@@ -11,7 +11,7 @@ then
 	shift
 fi
 
-BAND_DIRECTORY='vendor'
+[ -z "$BASHELOR_VENDOR_DIRECTORY" ] && BASHELOR_VENDOR_DIRECTORY='vendor'
 
 function require() {
 	local DRIVER
@@ -22,10 +22,10 @@ function require() {
 	URL="$2"
 	DEST="$3"
 
-	[ ! -d "$BAND_DIRECTORY" ] && mkdir "$BAND_DIRECTORY"
+	[ ! -d "$BASHELOR_VENDOR_DIRECTORY" ] && mkdir "$BASHELOR_VENDOR_DIRECTORY"
 
 	(
-		cd $BAND_DIRECTORY && \
+		cd $BASHELOR_VENDOR_DIRECTORY && \
 		$DRIVER "$URL" "$DEST" && \
 		cd "$DEST" && \
 		$0 install
@@ -33,14 +33,14 @@ function require() {
 }
 
 function mainuse() {
-	[ -z "$BAND_PATH" ] && BAND_PATH="$(dirname $0)/$BAND_DIRECTORY"
+	[ -z "$BAND_PATH" ] && BAND_PATH="$(dirname $0)/$BASHELOR_VENDOR_DIRECTORY"
 
 	for LIB in $*
 	do
 		if [ -f "$BAND_PATH/$LIB" ]
 		then
 			function use() {
-				BAND_PATH="$(dirname "$BAND_DIRECTORY/$LIB")/$BAND_DIRECTORY" mainuse $*
+				BAND_PATH="$(dirname "$BASHELOR_VENDOR_DIRECTORY/$LIB")/$BASHELOR_VENDOR_DIRECTORY" mainuse $*
 			}
 
 			. "$BAND_PATH/$LIB"
@@ -54,8 +54,8 @@ function mainuse() {
 	done
 }
 
-BAND_USE_TYPE=$(type -t use 2> /dev/null)
-if [ "$BAND_USE_TYPE" != "function" ]
+BASHELOR_USE_TYPE=$(type -t use 2> /dev/null)
+if [ "$BASHELOR_USE_TYPE" != "function" ]
 then
 	function use() {
 		mainuse $*
@@ -64,7 +64,7 @@ fi
 
 if [ "$1" = "install" ]
 then
-	[ -f band ] && . band
+	[ -f deps ] && . deps
 
 	exit
 fi
