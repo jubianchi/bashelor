@@ -4,7 +4,7 @@ all: bashelor driver bin
 	chmod +x bin/bashelor
 
 bashelor: build
-	cp src/bashelor.sh build/
+	cat src/logger.sh src/bashelor.sh > build/bashelor.sh
 
 driver: build
 	cat src/driver/*.sh > build/driver.sh

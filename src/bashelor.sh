@@ -1,6 +1,7 @@
-function log() {
-	echo $*
-}
+[ -z "$BASHELOR_VENDOR_DIRECTORY" ] && BASHELOR_VENDOR_DIRECTORY='vendor'
+[ -z "$BASHELOR_PATH" ] && BASHELOR_PATH="$(dirname $0)"
+BASHELOR_PATH="$BASHELOR_PATH/$BASHELOR_VENDOR_DIRECTORY"
+BASHELOR_PID=$$
 
 if [ "$1" = "-q" ]
 then
@@ -52,7 +53,9 @@ function mainuse() {
 				mainuse $*
 			}
 		else
-			echo "$BASHELOR_PATH/$LIB does not exist"
+			error "$BASHELOR_PATH/$LIB does not exist"
+
+			exit 2
 		fi
 	done
 }
@@ -72,7 +75,9 @@ function reluse() {
 		then
 			. "$BASHELOR_CURRENT_DIR/$LIB"
 		else
-			echo "$BASHELOR_CURRENT_DIR/$LIB does not exist"
+			error "$BASHELOR_CURRENT_DIR/$LIB does not exist"
+
+			exit 2
 		fi
 	done
 }
@@ -81,5 +86,5 @@ if [ "$1" = "install" ]
 then
 	[ -f deps ] && . deps
 
-	[ "$2" != "inline" ] && exit
+	[ "$2" != "inline" ] && exit 0
 fi
