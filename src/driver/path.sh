@@ -1,9 +1,6 @@
 function pathBashelorDriver() {
-	local URL
-	local DIRECTORY
-
-	URL="$1"
-	DIRECTORY="$2"
+	local URL="$1"
+	local DIRECTORY="$2"
 
 	if [ -d "$DIRECTORY" ]
 	then

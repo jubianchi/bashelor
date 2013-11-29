@@ -26,20 +26,16 @@ then
 fi
 
 function require() {
-	local DRIVER
-	local URL
-	local DEST
-
-	DRIVER="$1BashelorDriver"
-	URL="$2"
-	DEST="$3"
+	local DRIVER="$1BashelorDriver"
+	local URL="$2"
+	local DEST="$3"
 
 	[ ! -d "$BASHELOR_VENDOR_DIRECTORY" ] && mkdir "$BASHELOR_VENDOR_DIRECTORY"
 
 	(
 	    set -e
-		cd $BASHELOR_VENDOR_DIRECTORY
-		$DRIVER "$URL" "$DEST"
+		cd ${BASHELOR_VENDOR_DIRECTORY}
+		${DRIVER} "$URL" "$DEST"
 		echo
 		cd "$DEST"
 		( [ -f deps ] && . deps )
@@ -48,6 +44,8 @@ function require() {
 }
 
 function mainuse() {
+	local LIB
+
 	for LIB in $*
 	do
 		if [ -f "$BASHELOR_PATH/$LIB" ]
@@ -70,8 +68,7 @@ function mainuse() {
 	done
 }
 
-BASHELOR_USE_TYPE=$(type -t use 2> /dev/null)
-if [ "$BASHELOR_USE_TYPE" != "function" ]
+if [ "$(type -t use 2> /dev/null)" != "function" ]
 then
 	function use() {
 		mainuse $*
@@ -79,6 +76,8 @@ then
 fi
 
 function reluse() {
+    local LIB
+
 	for LIB in $*
 	do
 		if [ -f "$BASHELOR_CURRENT_DIR/$LIB" ]
