@@ -68,7 +68,7 @@ fi
 function reluse() {
 	for LIB in $*
 	do
-		if [ -f "$BASHELOR_PATH/$LIB" ]
+		if [ -f "$BASHELOR_CURRENT_DIR/$LIB" ]
 		then
 			. "$BASHELOR_CURRENT_DIR/$LIB"
 		else
