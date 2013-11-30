@@ -1,2 +1,6 @@
+before_script:
+    - git config --global user.name "bashelor"
+    - git config --global user.email "bashelor@test.com"
+
 script:
     - make
