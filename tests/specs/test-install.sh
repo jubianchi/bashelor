@@ -43,7 +43,7 @@ it_installs_deps_in_vendor_directory() {
 	local LINE1=$(echo "$OUTPUT" | head -n1)
 	local LINE2=$(echo "$OUTPUT" | head -n2 | tail -n1)
 
-	[ "$LINE1" = "=> Cloning $(success http://github.com/dfs-sh/roundup) into $(success dfs-sh/roundup)" ]
+	[ "$LINE1" = "=> Cloning $(success https://github.com/dfs-sh/roundup) into $(success dfs-sh/roundup)" ]
 	echo "$LINE2" | grep -e "Installed dfs-sh/roundup@[a-f0-9]*"
 	[ -d "vendor/dfs-sh/roundup" ]
 }
@@ -58,7 +58,7 @@ it_installs_deps_in_custom_vendor_subdirectory() {
 	local LINE1=$(echo "$OUTPUT" | head -n1)
 	local LINE2=$(echo "$OUTPUT" | head -n2 | tail -n1)
 
-	[ "$LINE1" = "=> Cloning $(success http://github.com/dfs-sh/roundup) into $(success custom/directory/roundup)" ]
+	[ "$LINE1" = "=> Cloning $(success https://github.com/dfs-sh/roundup) into $(success custom/directory/roundup)" ]
 	echo "$LINE2" | grep -e "Installed custom/directory/roundup@[a-f0-9]*"
 	[ -d "vendor/custom/directory/roundup" ]
 }
