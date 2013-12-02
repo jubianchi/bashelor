@@ -8,7 +8,7 @@ describe "bashelor usage"
 it_displays_usage() {
 	capture ../../bin/bashelor -h
 
-    local OUTPUT=$(getstdout)
+	local OUTPUT=$(getstdout)
 
 	local LINE1=$(echo "$OUTPUT" | head -n1)
 	local LINE3=$(echo "$OUTPUT" | head -n3 | tail -n1)

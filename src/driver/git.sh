@@ -1,17 +1,17 @@
 if [ -z "$BASHELOR_GIT_CMD" ]
 then
-    BASHELOR_GIT_CMD=git
+	BASHELOR_GIT_CMD=git
 fi
 
 function gitBashelorDriver() {
-    local GIT=$(which "$BASHELOR_GIT_CMD" 2>&1)
+	local GIT=$(which "$BASHELOR_GIT_CMD" 2>&1)
 
 	if [ -z "$GIT" ]
 	then
-	    error "git command ($BASHELOR_GIT_CMD) is not available"
+		error "git command ($BASHELOR_GIT_CMD) is not available"
 
-	    exit 45
-    fi
+		exit 45
+	fi
 
 	local URL="$1"
 	local DIRECTORY="$2"

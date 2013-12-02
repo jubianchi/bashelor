@@ -32,13 +32,11 @@ function require() {
 
 	[ ! -d "$BASHELOR_VENDOR_DIRECTORY" ] && mkdir "$BASHELOR_VENDOR_DIRECTORY"
 
-
-
-    cd ${BASHELOR_VENDOR_DIRECTORY}
-    ${DRIVER} "$URL" "$DEST"
-    echo
-    cd "$DEST"
-    ( [ -f deps ] && . deps )
+	cd ${BASHELOR_VENDOR_DIRECTORY}
+	${DRIVER} "$URL" "$DEST"
+	echo
+	cd "$DEST"
+	( [ -f deps ] && . deps )
 }
 
 function mainuse() {
@@ -74,7 +72,7 @@ then
 fi
 
 function reluse() {
-    local LIB
+	local LIB
 
 	for LIB in $*
 	do
@@ -93,12 +91,12 @@ if [ "$1" = "install" ]
 then
 	if [ -f deps ]
 	then
-	    . deps
-    else
-        error "Nos deps file found in $(pwd)"
+		. deps
+	else
+		error "Nos deps file found in $(pwd)"
 
-        exit 2
-    fi
+		exit 2
+	fi
 
 	[ "$2" != "inline" ] && exit 0
 fi
