@@ -8,6 +8,8 @@ dist: bin/bashelor
 clean:
 	@rm -rf bin build
 
+.PHONY: test dist clean
+
 # File targets
 bin/bashelor: bin build/driver build/bashelor
 	@echo "#!/bin/bash" | tee bin/bashelor > /dev/null
@@ -17,7 +19,7 @@ bin/bashelor: bin build/driver build/bashelor
 	@chmod +x bin/bashelor
 
 build/bashelor: build
-	@cat src/logger.sh src/upgrader.sh src/bashelor.sh > build/bashelor
+	@cat src/fileutil.sh src/logger.sh src/upgrader.sh src/bashelor.sh > build/bashelor
 
 build/driver: build
 	@cat src/driver/*.sh > build/driver
