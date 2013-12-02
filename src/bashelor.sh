@@ -29,6 +29,7 @@ function require() {
 	local DRIVER="$1BashelorDriver"
 	local URL="$2"
 	local DEST="$3"
+	local PREVPWD=$(pwd)
 
 	[ ! -d "$BASHELOR_VENDOR_DIRECTORY" ] && mkdir "$BASHELOR_VENDOR_DIRECTORY"
 
@@ -36,7 +37,8 @@ function require() {
 	${DRIVER} "$URL" "$DEST"
 	echo
 	cd "$DEST"
-	( [ -f deps ] && . deps )
+	( [ -f deps ] && . deps || true )
+	cd "$PREVPWD"
 }
 
 function mainuse() {
@@ -57,7 +59,7 @@ function mainuse() {
 				mainuse $*
 			}
 		else
-			error "$LIB does not exist"
+			error "$LIB (resolved from $(pwd) to $BASHELOR_PATH/$LIB) does not exist"
 
 			exit 2
 		fi
@@ -74,13 +76,15 @@ fi
 function reluse() {
 	local LIB
 
+	[ -z "$BASHELOR_CURRENT_DIR" ] && BASHELOR_CURRENT_DIR=$(pwd)
+
 	for LIB in $*
 	do
 		if [ -f "$BASHELOR_CURRENT_DIR/$LIB" ]
 		then
 			. "$BASHELOR_CURRENT_DIR/$LIB"
 		else
-			error "$LIB does not exist"
+			error "$LIB (resolved from $(pwd) to $BASHELOR_PATH/$LIB) does not exist"
 
 			exit 2
 		fi
