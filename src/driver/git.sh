@@ -4,9 +4,9 @@ then
 fi
 
 function gitBashelorDriver() {
-	local GIT=$(which "$BASHELOR_GIT_CMD" 2>&1)
+	local GIT=$(which "$BASHELOR_GIT_CMD" 2> /dev/null)
 
-	if [ -z "$GIT" ]
+	if [[ -z "$GIT" || ! $? -eq 0 ]]
 	then
 		error "git command ($BASHELOR_GIT_CMD) is not available"
 

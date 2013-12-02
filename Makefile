@@ -10,7 +10,9 @@ clean:
 
 # File targets
 bin/bashelor: bin build/driver build/bashelor
-	@echo -e "#!/bin/bash\n" > bin/bashelor
+	@echo "#!/bin/bash" | tee bin/bashelor > /dev/null
+	@echo | tee -a bin/bashelor > /dev/null
+	@echo | tee -a bin/bashelor > /dev/null
 	@cat build/driver build/bashelor >> bin/bashelor
 	@chmod +x bin/bashelor
 
