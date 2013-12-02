@@ -35,7 +35,7 @@ function require() {
 
 	cd ${BASHELOR_VENDOR_DIRECTORY}
 	${DRIVER} "$URL" "$DEST"
-	echo
+	log
 	cd "$DEST"
 	( [ -f deps ] && . deps || true )
 	cd "$PREVPWD"
