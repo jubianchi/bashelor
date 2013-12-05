@@ -48,3 +48,15 @@ it_displays_real_paths() {
 	[ $(realpath "symlink_file") = "$TEST_SANDBOX/symlink_file" ]
 	[ $(realpath "symlink_directory") = "$TEST_SANDBOX/symlink_directory" ]
 }
+
+it_displays_sourcing_file_path() {
+	local SOURCING_FILE="$TEST_SANDBOX/sourcing"
+	local SOURCED_FILE="$TEST_SANDBOX/sourced"
+
+	echo " . $(realpath ../../src/fileutil.sh)"	 > ${SOURCED_FILE}
+	echo "__SOURCE__" >> ${SOURCED_FILE}
+
+	echo ". $SOURCED_FILE" > ${SOURCING_FILE}
+
+	[ "$(. ${SOURCING_FILE})" = "$SOURCING_FILE" ]
+}

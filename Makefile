@@ -1,7 +1,13 @@
+DEBUG=
+TEST="test-*.sh"
+
 # Action targets
 test: clean dist
-	@bin/bashelor -q install
-	@cd tests/specs && ../../vendor/dfs-sh/roundup/roundup.sh test-*.sh
+	@bin/bashelor install
+	@cd tests/specs && ../../vendor/dfs-sh/roundup/roundup.sh $(DEBUG) $(TEST)
+
+test-debug:
+	make test DEBUG="--debug"
 
 dist: bin/bashelor
 

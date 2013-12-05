@@ -63,6 +63,26 @@ it_installs_deps_in_custom_vendor_subdirectory() {
 	[ -d "vendor/custom/directory/roundup" ]
 }
 
+it_installs_sub_deps() {
+	project "$TEST_SANDBOX/subdependency"
+	file "$TEST_SANDBOX/subdependency" "dummy"
+
+	project "$TEST_SANDBOX/dependency"
+	require "$TEST_SANDBOX/dependency" "path" "$TEST_SANDBOX/subdependency" "bashelor/subdependency"
+	file "$TEST_SANDBOX/dependency" "dummy"
+
+	project "$TEST_SANDBOX/project"
+	require "$TEST_SANDBOX/project" "path" "$TEST_SANDBOX/dependency" "bashelor/dependency"
+
+	cd "$TEST_SANDBOX/project"
+	${TEST_PWD}/../../bin/bashelor install
+
+	[ -d "vendor/bashelor/dependency" ]
+	[ -f "vendor/bashelor/dependency/dummy" ]
+	[ -d "vendor/bashelor/dependency/vendor/bashelor/subdependency" ]
+	[ -f "vendor/bashelor/dependency/vendor/bashelor/subdependency/dummy" ]
+}
+
 it_updates_deps() {
 	cd ${TEST_SANDBOX}
 	echo "require github dfs-sh/roundup" > deps

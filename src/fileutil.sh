@@ -14,6 +14,10 @@ function __DIR__() {
 	cd "$DIR"; pwd
 }
 
+function __SOURCE__() {
+	realpath ${BASH_SOURCE[2]}
+}
+
 function realpath() {
 	if [ -f "$1" ]
 	then
