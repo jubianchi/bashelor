@@ -103,4 +103,11 @@ then
 	fi
 
 	[ "$2" != "inline" ] && exit 0
+elif [ "$1" = "upgrade" ]
+then
+	upgrade
+else
+	error "Unknown command \033[1;31m$1"
+
+	exit 22
 fi
