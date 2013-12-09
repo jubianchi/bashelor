@@ -3,17 +3,7 @@
 BASHELOR_PATH="$BASHELOR_PATH/$BASHELOR_VENDOR_DIRECTORY"
 BASHELOR_PID=$$
 
-if [ "$1" = "-q" ]
-then
-	function log() {
-		return
-	}
-
-	shift
-fi
-
-if [ "$1" = "-h" ]
-then
+function usage() {
 	log "Usage: $(success $0) $(warning [-h] [-q]) $(success [install] [inline])"
 	log
 	log "  $(success install): Install dependencies"
@@ -21,9 +11,7 @@ then
 	log
 	log "  $(warning -q): Quiet mode (no output)"
 	log "  $(warning -h): Display this help message"
-
-	exit
-fi
+}
 
 function require() {
 	local DRIVER="$1BashelorDriver"
@@ -90,6 +78,22 @@ function reluse() {
 		fi
 	done
 }
+
+if [[ -z "$1" || "$1" = "-h" ]]
+then
+	usage
+
+	exit
+fi
+
+if [ "$1" = "-q" ]
+then
+	function log() {
+		return
+	}
+
+	shift
+fi
 
 if [ "$1" = "install" ]
 then
