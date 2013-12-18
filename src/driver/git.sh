@@ -1,3 +1,4 @@
+BASHELOR_GIT_CMD=
 if [ -z "$BASHELOR_GIT_CMD" ]
 then
 	BASHELOR_GIT_CMD=git
