@@ -1,8 +1,4 @@
-BASHELOR_GIT_CMD=
-if [ -z "$BASHELOR_GIT_CMD" ]
-then
-	BASHELOR_GIT_CMD=git
-fi
+[ -z "$(printenv BASHELOR_GIT_CMD)" ] && BASHELOR_GIT_CMD=git
 
 function gitBashelorDriver() {
 	local GIT=$(which "$BASHELOR_GIT_CMD" 2> /dev/null)
