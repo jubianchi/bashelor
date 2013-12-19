@@ -29,7 +29,7 @@ it_throws_error_if_git_not_available() {
 
 	[ $(getstatus) -eq 45 ]
 	[ "$LINE1" = "$(error "git command (git_not_available) is not available" | head -n1)" ]
-	[ "$LINE2" = "$(error " └── deps (line 1)" | head -n1)" ]
+	[[ "$LINE2" = "$(error " └── deps (line 1)" | head -n1)" || "$LINE2" = "$(error " └── ./deps (line 1)" | head -n1)" ]]
 }
 
 it_clones_git_repository() {
