@@ -17,7 +17,7 @@ bin/bashelor: bin build/driver build/bashelor
 	@chmod +x bin/bashelor
 
 build/bashelor: build
-	@cat src/logger.sh src/upgrader.sh src/bashelor.sh > build/bashelor
+	@cat src/help.sh src/logger.sh src/upgrader.sh src/bashelor.sh > build/bashelor
 
 build/driver: build
 	@cat src/driver/*.sh > build/driver
