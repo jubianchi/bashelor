@@ -16,9 +16,9 @@ it_displays_usage() {
 	local LINE6=$(echo "$OUTPUT" | head -n6 | tail -n1)
 	local LINE7=$(echo "$OUTPUT" | head -n7 | tail -n1)
 
-	[ "$LINE1" = "Usage: $(success ../../bin/bashelor) $(warning [-h] [-q]) $(success [install] [inline])" ]
-	[ "$LINE3" = "  $(success install): Install dependencies" ]
-	[ "$LINE4" = "  $(success inline): Inline install dependencies" ]
-	[ "$LINE6" = "  $(warning -q): Quiet mode (no output)" ]
-	[ "$LINE7" = "  $(warning -h): Display this help message" ]
+	[ "$LINE1" = "Usage: $(bashelor.logger.success ../../bin/bashelor) $(bashelor.logger.warning [-h] [-q]) $(bashelor.logger.success [install] [inline])" ]
+	[ "$LINE3" = "  $(bashelor.logger.success install): Install dependencies" ]
+	[ "$LINE4" = "  $(bashelor.logger.success inline): Inline install dependencies" ]
+	[ "$LINE6" = "  $(bashelor.logger.warning -q): Quiet mode (no output)" ]
+	[ "$LINE7" = "  $(bashelor.logger.warning -h): Display this help message" ]
 }

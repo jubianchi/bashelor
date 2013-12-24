@@ -1,7 +1,12 @@
 #!/bin/bash
 
 function project() {
-    [ ! -d "$1" ]
+    if [ "$1" = "-f" ]
+    then
+        shift
+    else
+        [ ! -d "$1" ]
+    fi
 
     mkdir -p "$1" && cd "$1"
 
@@ -14,5 +19,5 @@ function project() {
 function require() {
     [ -d "$1" ]
 
-    echo "require $2 $3 $4"  > "$1/deps"
+    echo "bashelor.require $2 $3 $4"  > "$1/deps"
 }

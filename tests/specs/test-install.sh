@@ -21,7 +21,7 @@ it_throws_error_if_no_deps_file() {
 
 	local OUTPUT=$(getstdout | head -n1)
 
-	[ "$OUTPUT" = "$(error "Nos deps file found in $TEST_PWD" | head -n1)" ]
+	[ "$OUTPUT" = "$(bashelor.logger.error "Nos deps file found in $TEST_PWD" | head -n1)" ]
 }
 
 it_does_nothing_on_empty_deps_file() {
@@ -34,8 +34,8 @@ it_does_nothing_on_empty_deps_file() {
 }
 
 it_installs_deps_in_vendor_directory() {
-	cd ${TEST_SANDBOX}
-	echo "require github dfs-sh/roundup" > deps
+	project -f "$TEST_SANDBOX"
+	require "$TEST_SANDBOX" "github" "dfs-sh/roundup"
 
 	capture ${TEST_PWD}/../../bin/bashelor install
 
@@ -43,14 +43,14 @@ it_installs_deps_in_vendor_directory() {
 	local LINE1=$(echo "$OUTPUT" | head -n1)
 	local LINE2=$(echo "$OUTPUT" | head -n2 | tail -n1)
 
-	[ "$LINE1" = "=> Cloning $(success https://github.com/dfs-sh/roundup) into $(success dfs-sh/roundup)" ]
+	[ "$LINE1" = "=> Cloning $(bashelor.logger.success https://github.com/dfs-sh/roundup) into $(bashelor.logger.success dfs-sh/roundup)" ]
 	echo "$LINE2" | grep -e "Installed dfs-sh/roundup@[a-f0-9]*"
 	[ -d "vendor/dfs-sh/roundup" ]
 }
 
 it_installs_deps_in_custom_vendor_subdirectory() {
-	cd ${TEST_SANDBOX}
-	echo "require github dfs-sh/roundup custom/directory/roundup" > deps
+	project -f "$TEST_SANDBOX"
+	require "$TEST_SANDBOX" "github" "dfs-sh/roundup" "custom/directory/roundup"
 
 	capture ${TEST_PWD}/../../bin/bashelor install
 
@@ -58,14 +58,14 @@ it_installs_deps_in_custom_vendor_subdirectory() {
 	local LINE1=$(echo "$OUTPUT" | head -n1)
 	local LINE2=$(echo "$OUTPUT" | head -n2 | tail -n1)
 
-	[ "$LINE1" = "=> Cloning $(success https://github.com/dfs-sh/roundup) into $(success custom/directory/roundup)" ]
+	[ "$LINE1" = "=> Cloning $(bashelor.logger.success https://github.com/dfs-sh/roundup) into $(bashelor.logger.success custom/directory/roundup)" ]
 	echo "$LINE2" | grep -e "Installed custom/directory/roundup@[a-f0-9]*"
 	[ -d "vendor/custom/directory/roundup" ]
 }
 
 it_updates_deps() {
-	cd ${TEST_SANDBOX}
-	echo "require github dfs-sh/roundup" > deps
+	project -f "$TEST_SANDBOX"
+	require "$TEST_SANDBOX" "github" "dfs-sh/roundup"
 
 	${TEST_PWD}/../../bin/bashelor install
 	capture ${TEST_PWD}/../../bin/bashelor install
@@ -74,7 +74,7 @@ it_updates_deps() {
 	local LINE1=$(echo "$OUTPUT" | head -n1)
 	local LINE2=$(echo "$OUTPUT" | head -n2 | tail -n1)
 
-	[ "$LINE1" = "=> Updating $(success dfs-sh/roundup)" ]
+	[ "$LINE1" = "=> Updating $(bashelor.logger.success dfs-sh/roundup)" ]
 	echo "$LINE2" | grep -e "Nothing to update ([a-f0-9]*)"
 	[ -d "vendor/dfs-sh/roundup" ]
 }

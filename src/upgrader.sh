@@ -1,31 +1,31 @@
-function upgrade() {
+function bashelor.upgrader.upgrade() {
 	local BIN_PATH="$0"
 	local TEMP_PATH=$(mktemp -d)
 
 	(
-		log "=> Updating $(success "bashelor")"
+		bashelor.logger.log "=> Updating $(bashelor.logger.success "bashelor")"
 		if ! git clone https://github.com/jubianchi/bashelor.git ${TEMP_PATH} > /dev/null 2>&1
 		then
 			local STATUS=$?
-			error "Bashelor was not upgraded: clone failed"
+			bashelor.logger.error "Bashelor was not upgraded: clone failed"
 			exit ${STATUS}
 		fi
 
 		cd ${TEMP_PATH}
 
-		log "=> Running tests and building $(success "bashelor")"
+		bashelor.logger.log "=> Running tests and building $(bashelor.logger.success "bashelor")"
 		if ! make
 		then
 			local STATUS=$?
-			error "Bashelor was not upgraded: tests failed"
+			bashelor.logger.error "Bashelor was not upgraded: tests failed"
 			exit ${STATUS}
 		fi
 
-		log "=> Copying $(success "bashelor") to $(success "$TEMP_PATH")"
+		bashelor.logger.log "=> Copying $(bashelor.logger.success "bashelor") to $(bashelor.logger.success "$TEMP_PATH")"
  		if ! cp -f bin/bashelor ${BIN_PATH}
  		then
  			local STATUS=$?
-			error "Bashelor was not upgraded: copy failed"
+			bashelor.logger.error "Bashelor was not upgraded: copy failed"
 			exit ${STATUS}
 		fi
 	)

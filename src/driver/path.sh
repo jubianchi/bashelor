@@ -1,17 +1,17 @@
-function pathBashelorDriver() {
+function bashelor.driver.path() {
 	local URL="$1"
 	local DIRECTORY="$2"
 
 	if [ -d "$DIRECTORY" ]
 	then
-		log "=> Updating $(success $DIRECTORY)"
+		bashelor.logger.log "=> Updating $(bashelor.logger.success $DIRECTORY)"
 		rm -rf "$DIRECTORY"
 	else
-		log "=> Installing $(success $DIRECTORY)"
+		bashelor.logger.log "=> Installing $(bashelor.logger.success $DIRECTORY)"
 	fi
 
 	mkdir -p "$DIRECTORY"
 
 	cp -r "$URL"/* "$DIRECTORY"
-	warning "   Installed $DIRECTORY"
+	bashelor.logger.warning "   Installed $DIRECTORY"
 }

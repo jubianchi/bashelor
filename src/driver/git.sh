@@ -1,11 +1,11 @@
 [ -z "$(printenv BASHELOR_GIT_CMD)" ] && BASHELOR_GIT_CMD=git
 
-function gitBashelorDriver() {
+function bashelor.driver.git() {
 	local GIT=$(which "$BASHELOR_GIT_CMD" 2> /dev/null)
 
 	if [[ -z "$GIT" || ! $? -eq 0 ]]
 	then
-		error "git command ($BASHELOR_GIT_CMD) is not available"
+		bashelor.logger.error "git command ($BASHELOR_GIT_CMD) is not available"
 
 		exit 45
 	fi
@@ -19,13 +19,13 @@ function gitBashelorDriver() {
 	then
 		PREV_REV=$(${GIT} --git-dir="$DIRECTORY/.git" rev-parse --short HEAD)
 
-		log "=> Updating $(success "$DIRECTORY")"
+		bashelor.logger.log "=> Updating $(bashelor.logger.success "$DIRECTORY")"
 		(
 			cd "$DIRECTORY" && \
 			${GIT} pull
 		) > /dev/null 2>&1
 	else
-		log "=> Cloning $(success "$URL") into $(success "$DIRECTORY")"
+		bashelor.logger.log "=> Cloning $(bashelor.logger.success "$URL") into $(bashelor.logger.success "$DIRECTORY")"
 		${GIT} clone "$URL" "$DIRECTORY" > /dev/null 2>&1
 	fi
 
@@ -35,12 +35,12 @@ function gitBashelorDriver() {
 	then
 		if [ "$PREV_REV" != "$CURRENT_REV" ]
 		then
-			warning "   Updated $PREV_REV..$CURRENT_REV"
-			warning "  $(${GIT} --git-dir="$DIRECTORY/.git" diff --shortstat "$PREV_REV..$CURRENT_REV")"
+			bashelor.logger.warning "   Updated $PREV_REV..$CURRENT_REV"
+			bashelor.logger.warning "  $(${GIT} --git-dir="$DIRECTORY/.git" diff --shortstat "$PREV_REV..$CURRENT_REV")"
 		else
-			warning "   Nothing to update ($CURRENT_REV)"
+			bashelor.logger.warning "   Nothing to update ($CURRENT_REV)"
 		fi
 	else
-		warning "   Installed $DIRECTORY@$CURRENT_REV"
+		bashelor.logger.warning "   Installed $DIRECTORY@$CURRENT_REV"
 	fi
 }

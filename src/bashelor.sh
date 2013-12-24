@@ -4,8 +4,8 @@
 BASHELOR_PATH="$BASHELOR_PATH/$BASHELOR_VENDOR_DIRECTORY"
 BASHELOR_PID=$$
 
-function require() {
-	local DRIVER="$1BashelorDriver"
+function bashelor.require() {
+	local DRIVER="bashelor.driver.$1"
 	local URL="$2"
 	local DEST="$3"
 	local PREVPWD=$(pwd)
@@ -14,45 +14,45 @@ function require() {
 
 	cd ${BASHELOR_VENDOR_DIRECTORY}
 	${DRIVER} "$URL" "$DEST"
-	log
+	bashelor.logger.log
 	cd "$DEST"
 	( [ -f deps ] && . deps || true )
 	cd "$PREVPWD"
 }
 
-function mainuse() {
+function bashelor.mainuse() {
 	local LIB
 
 	for LIB in $*
 	do
 		if [ -f "$BASHELOR_PATH/$LIB" ]
 		then
-			function use() {
-				BASHELOR_PATH="$(dirname "$BASHELOR_VENDOR_DIRECTORY/$LIB")/$BASHELOR_VENDOR_DIRECTORY" mainuse $*
+			function bashelor.use() {
+				BASHELOR_PATH="$(dirname "$BASHELOR_VENDOR_DIRECTORY/$LIB")/$BASHELOR_VENDOR_DIRECTORY" bashelor.mainuse $*
 			}
 
 			BASHELOR_CURRENT_DIR=$(dirname "$BASHELOR_PATH/$LIB")
 			. "$BASHELOR_PATH/$LIB"
 
-			function use() {
+			function bashelor.use() {
 				mainuse $*
 			}
 		else
-			error "$LIB (resolved from $(pwd) to $BASHELOR_PATH/$LIB) does not exist"
+			bashelor.logger.error "$LIB (resolved from $(pwd) to $BASHELOR_PATH/$LIB) does not exist"
 
 			exit 2
 		fi
 	done
 }
 
-if [ "$(type -t use 2> /dev/null)" != "function" ]
+if [ "$(type -t bashelor.use 2> /dev/null)" != "function" ]
 then
-	function use() {
-		mainuse $*
+	function bashelor.use() {
+		bashelor.mainuse $*
 	}
 fi
 
-function reluse() {
+function bashelor.reluse() {
 	local LIB
 
 	[ -z "$BASHELOR_CURRENT_DIR" ] && BASHELOR_CURRENT_DIR=$(pwd)
@@ -63,7 +63,7 @@ function reluse() {
 		then
 			. "$BASHELOR_CURRENT_DIR/$LIB"
 		else
-			error "$LIB (resolved from $(pwd) to $BASHELOR_PATH/$LIB) does not exist"
+			bashelor.logger.error "$LIB (resolved from $(pwd) to $BASHELOR_PATH/$LIB) does not exist"
 
 			exit 2
 		fi
@@ -72,14 +72,14 @@ function reluse() {
 
 if [[ -z "$1" || "$1" = "-h" ]]
 then
-	usage
+	bashelor.helper.usage
 
 	exit
 fi
 
 if [ "$1" = "-q" ]
 then
-	function log() {
+	function bashelor.logger.log() {
 		return
 	}
 
@@ -92,7 +92,7 @@ then
 	then
 		. deps
 	else
-		error "Nos deps file found in $(pwd)"
+		bashelor.logger.error "Nos deps file found in $(pwd)"
 
 		exit 2
 	fi
@@ -100,9 +100,9 @@ then
 	[ "$2" != "inline" ] && exit 0
 elif [ "$1" = "upgrade" ]
 then
-	upgrade
+	bashelor.upgrader.upgrade
 else
-	error "Unknown command \033[1;31m$1"
+	bashelor.logger.error "Unknown command \033[1;31m$1"
 
 	exit 22
 fi

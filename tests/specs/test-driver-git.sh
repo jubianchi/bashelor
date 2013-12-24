@@ -17,8 +17,8 @@ after() {
 }
 
 it_throws_error_if_git_not_available() {
-	cd ${TEST_SANDBOX}
-	echo "require git git@host:repository.git test/repository" > deps
+	project -f "$TEST_SANDBOX"
+	require "$TEST_SANDBOX" "git" "git@host:repository.git" "test/repository"
 
 	export BASHELOR_GIT_CMD="git_not_available"
 	expectfail capture ${TEST_PWD}/../../bin/bashelor install
@@ -28,8 +28,8 @@ it_throws_error_if_git_not_available() {
 	local LINE2=$(echo "$OUTPUT" | head -n2 | tail -n1)
 
 	[ $(getstatus) -eq 45 ]
-	[ "$LINE1" = "$(error "git command (git_not_available) is not available" | head -n1)" ]
-	[[ "$LINE2" = "$(error " └── deps (line 1)" | head -n1)" || "$LINE2" = "$(error " └── ./deps (line 1)" | head -n1)" ]]
+	[ "$LINE1" = "$(bashelor.logger.error "git command (git_not_available) is not available" | head -n1)" ]
+	[[ "$LINE2" = "$(bashelor.logger.error " └── deps (line 1)" | head -n1)" || "$LINE2" = "$(bashelor.logger.error " └── ./deps (line 1)" | head -n1)" ]]
 }
 
 it_clones_git_repository() {
@@ -46,8 +46,8 @@ it_clones_git_repository() {
 	local LINE1=$(echo "$OUTPUT" | head -n1)
 	local LINE2=$(echo "$OUTPUT" | head -n2 | tail -n1)
 
-	[ "$LINE1" = "=> Cloning $(success ${TEST_SANDBOX}/repository) into $(success test/repository)" ]
-	[ "$LINE2" = "$(warning "   Installed test/repository@$REV")" ]
+	[ "$LINE1" = "=> Cloning $(bashelor.logger.success ${TEST_SANDBOX}/repository) into $(bashelor.logger.success test/repository)" ]
+	[ "$LINE2" = "$(bashelor.logger.warning "   Installed test/repository@$REV")" ]
 	[ -d "$TEST_SANDBOX/project/vendor/test/repository" ]
 	[ $(revision "$TEST_SANDBOX/project/vendor/test/repository") = "$REV" ]
 }
@@ -71,8 +71,8 @@ it_pulls_git_repository() {
 	local LINE1=$(echo "$OUTPUT" | head -n1)
 	local LINE2=$(echo "$OUTPUT" | head -n2 | tail -n1)
 
-	[ "$LINE1" = "=> Updating $(success test/repository)" ]
-	[ "$LINE2" = "$(warning "   Updated $FIRST_REV..$REV")" ]
+	[ "$LINE1" = "=> Updating $(bashelor.logger.success test/repository)" ]
+	[ "$LINE2" = "$(bashelor.logger.warning "   Updated $FIRST_REV..$REV")" ]
 	[ -d "$TEST_SANDBOX/project/vendor/test/repository" ]
 	[ $(revision "$TEST_SANDBOX/project/vendor/test/repository") = "$REV" ]
 }
