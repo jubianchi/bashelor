@@ -11,13 +11,22 @@ function bashelor.require() {
 	local PREVPWD=$(pwd)
 
 	[ ! -d "$BASHELOR_VENDOR_DIRECTORY" ] && mkdir "$BASHELOR_VENDOR_DIRECTORY"
+	[ -z "$DEST" ] && DEST="$URL"
 
 	cd ${BASHELOR_VENDOR_DIRECTORY}
+
 	${DRIVER} "$URL" "$DEST"
-	bashelor.logger.log
-	cd "$DEST"
-	( [ -f deps ] && . deps || true )
-	cd "$PREVPWD"
+	local STATUS=$?
+
+	if [ -d "$DEST" ]
+	then
+		cd "$DEST"
+		[ -f deps ] && . deps
+		cd "$PREVPWD"
+	else
+		cd "$PREVPWD"
+		exit ${STATUS}
+	fi
 }
 
 function bashelor.mainuse() {
@@ -35,7 +44,7 @@ function bashelor.mainuse() {
 			. "$BASHELOR_PATH/$LIB"
 
 			function bashelor.use() {
-				mainuse $*
+				bashelor.mainuse $*
 			}
 		else
 			bashelor.logger.error "$LIB (resolved from $(pwd) to $BASHELOR_PATH/$LIB) does not exist"
@@ -86,8 +95,14 @@ then
 	shift
 fi
 
+[ -z "$(printenv BASHELOR_WORKING)" ] && export BASHELOR_WORKING=0
+[ "$BASHELOR_WORKING" -eq 1 ] && exit
+
+
 if [ "$1" = "install" ]
 then
+	export BASHELOR_WORKING=1
+
 	if [ -f deps ]
 	then
 		. deps

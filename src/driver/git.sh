@@ -17,7 +17,7 @@ function bashelor.driver.git() {
 
 	if [ -d "$DIRECTORY" ]
 	then
-		PREV_REV=$(${GIT} --git-dir="$DIRECTORY/.git" rev-parse --short HEAD)
+		PREV_REV=$(cd ${DIRECTORY} && ${GIT} rev-parse --short HEAD)
 
 		bashelor.logger.log "=> Updating $(bashelor.logger.success "$DIRECTORY")"
 		(
@@ -36,7 +36,7 @@ function bashelor.driver.git() {
 		if [ "$PREV_REV" != "$CURRENT_REV" ]
 		then
 			bashelor.logger.warning "   Updated $PREV_REV..$CURRENT_REV"
-			bashelor.logger.warning "  $(${GIT} --git-dir="$DIRECTORY/.git" diff --shortstat "$PREV_REV..$CURRENT_REV")"
+			bashelor.logger.warning "  $(cd ${DIRECTORY} ${GIT} diff --shortstat "$PREV_REV..$CURRENT_REV")"
 		else
 			bashelor.logger.warning "   Nothing to update ($CURRENT_REV)"
 		fi
