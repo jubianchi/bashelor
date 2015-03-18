@@ -1,6 +1,6 @@
 function upgrade() {
 	local BIN_PATH="$0"
-	local TEMP_PATH=$(mktemp -d)
+	local TEMP_PATH=$(mktemp -d bashelor_upgrade)
 
 	(
 		log "=> Updating $(success "bashelor")"
@@ -11,7 +11,7 @@ function upgrade() {
 			exit ${STATUS}
 		fi
 
-		cd ${TEMP_PATH}
+		cd ${TEMP_PATH} >/dev/null
 
 		log "=> Running tests and building $(success "bashelor")"
 		if ! make
@@ -21,12 +21,19 @@ function upgrade() {
 			exit ${STATUS}
 		fi
 
-		log "=> Copying $(success "bashelor") to $(success "$TEMP_PATH")"
- 		if ! cp -f bin/bashelor ${BIN_PATH}
- 		then
- 			local STATUS=$?
+		cd - >/dev/null
+
+		log "=> Copying $(success "bashelor") to $(success "$BIN_PATH")"
+		if ! cp -f ${TEMP_PATH}/bin/bashelor ${BIN_PATH}
+		then
+			local STATUS=$?
 			error "Bashelor was not upgraded: copy failed"
 			exit ${STATUS}
 		fi
 	)
+
+	local STATUS=$?
+
+	rm -rf $TEMP_PATH
+	exit $STATUS
 }

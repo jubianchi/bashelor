@@ -5,9 +5,10 @@ BASHELOR_PATH="$BASHELOR_PATH/$BASHELOR_VENDOR_DIRECTORY"
 BASHELOR_PID=$$
 
 function usage() {
-	log "Usage: $(success $0) $(warning [-h] [-q]) $(success [install] [inline])"
+	log "Usage: $(success $0) $(warning [-h] [-q]) $(success [install|upgrade])"
 	log
 	log "  $(success install): Install dependencies"
+	log "  $(success upgrade): Upgrade bashelor"
 	log
 	log "  $(warning -q): Quiet mode (no output)"
 	log "  $(warning -h): Display this help message"

@@ -12,11 +12,13 @@ it_displays_usage() {
 
 	local LINE1=$(echo "$OUTPUT" | head -n1)
 	local LINE3=$(echo "$OUTPUT" | head -n3 | tail -n1)
-	local LINE5=$(echo "$OUTPUT" | head -n5 | tail -n1)
+	local LINE4=$(echo "$OUTPUT" | head -n4 | tail -n1)
 	local LINE6=$(echo "$OUTPUT" | head -n6 | tail -n1)
+	local LINE7=$(echo "$OUTPUT" | head -n7 | tail -n1)
 
-	[ "$LINE1" = "Usage: $(success ../../bin/bashelor) $(warning [-h] [-q]) $(success [install] [inline])" ]
+	[ "$LINE1" = "Usage: $(success ../../bin/bashelor) $(warning [-h] [-q]) $(success [install|upgrade])" ]
 	[ "$LINE3" = "  $(success install): Install dependencies" ]
-	[ "$LINE5" = "  $(warning -q): Quiet mode (no output)" ]
-	[ "$LINE6" = "  $(warning -h): Display this help message" ]
+	[ "$LINE4" = "  $(success upgrade): Upgrade bashelor" ]
+	[ "$LINE6" = "  $(warning -q): Quiet mode (no output)" ]
+	[ "$LINE7" = "  $(warning -h): Display this help message" ]
 }
