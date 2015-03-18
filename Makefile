@@ -11,7 +11,7 @@ clean:
 # File targets
 bin/bashelor: bin build/driver build/bashelor
 	@echo "#!/bin/bash" | tee bin/bashelor > /dev/null
-	@echo "#Built on $(shell date --rfc-2822)" | tee -a bin/bashelor > /dev/null
+	@echo "#Built on $(shell date)" | tee -a bin/bashelor > /dev/null
 	@echo | tee -a bin/bashelor > /dev/null
 	@cat build/driver build/bashelor >> bin/bashelor
 	@chmod +x bin/bashelor
