@@ -8,7 +8,7 @@ function upgrade() {
 		then
 			local STATUS=$?
 			error "Bashelor was not upgraded: clone failed"
-			exit ${STATUS}
+			return ${STATUS}
 		fi
 
 		cd ${TEMP_PATH} >/dev/null
@@ -18,7 +18,7 @@ function upgrade() {
 		then
 			local STATUS=$?
 			error "Bashelor was not upgraded: tests failed"
-			exit ${STATUS}
+			return ${STATUS}
 		fi
 
 		cd - >/dev/null
@@ -28,12 +28,12 @@ function upgrade() {
 		then
 			local STATUS=$?
 			error "Bashelor was not upgraded: copy failed"
-			exit ${STATUS}
+			return ${STATUS}
 		fi
 	)
 
 	local STATUS=$?
 
 	rm -rf $TEMP_PATH
-	exit $STATUS
+	return $STATUS
 }

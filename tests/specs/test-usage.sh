@@ -16,7 +16,7 @@ it_displays_usage() {
 	local LINE6=$(echo "$OUTPUT" | head -n6 | tail -n1)
 	local LINE7=$(echo "$OUTPUT" | head -n7 | tail -n1)
 
-	[ "$LINE1" = "Usage: $(success ../../bin/bashelor) $(warning [-h] [-q]) $(success [install|upgrade])" ]
+	[ "$LINE1" = "Usage: $(success ../../bin/bashelor) $(warning [-h] [-q]) $(success '[install|upgrade]')" ]
 	[ "$LINE3" = "  $(success install): Install dependencies" ]
 	[ "$LINE4" = "  $(success upgrade): Upgrade bashelor" ]
 	[ "$LINE6" = "  $(warning -q): Quiet mode (no output)" ]
