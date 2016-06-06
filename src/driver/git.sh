@@ -5,7 +5,7 @@ function gitBashelorDriver() {
 	then
 		error "git command ($BASHELOR_GIT_CMD) is not available"
 
-		exit 45
+		return 45
 	fi
 
 	local URL="$1"
@@ -41,4 +41,6 @@ function gitBashelorDriver() {
 	else
 		warning "   Installed $DIRECTORY@$CURRENT_REV"
 	fi
+
+	return 0
 }
